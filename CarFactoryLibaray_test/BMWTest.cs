@@ -7,84 +7,89 @@ namespace CarFactoryLibaray_test
         [Fact]
         public void Equal_velocityAndMode_true()
         {
-            // Arrange
+            // arrange
             BMW bmw1 = new BMW { velocity = 0, drivingMode = DrivingMode.Forward };
             BMW bmw2 = new BMW { velocity = 0, drivingMode = DrivingMode.Forward };
 
-            // Act
+            // act
             bool result = bmw1.Equals(bmw2);
 
-            // Assert
+            // assert
             Assert.True(result);
         }
+
 
         [Fact]
         public void InRange_velocity_distance_true()
         {
-            // Arrange
+            // arrange
             BMW bmw = new BMW { velocity = 10 };
 
-            // Act
+            // act
             double time = bmw.TimeToCoverDistance(100);
 
-            // Assert
+            // assert
             Assert.InRange(time, 5, 15);
         }
+
 
         [Fact]
         public void OutRange_velocity_distance_true()
         {
-            // Arrange
+            // arrange
             BMW bmw = new BMW { velocity = 10 };
 
-            // Act
+            // act
             double time = bmw.TimeToCoverDistance(100);
 
-            // Assert
+            // assert
             Assert.NotInRange(time, 5, 6);
         }
+
 
         [Fact]
         public void TestStringStop_Direction_Stop()
         {
-            // Arrange
+            // arrange
             BMW bmw = new BMW { drivingMode = DrivingMode.Stopped };
 
-            // Act
+            // act
             string result = bmw.GetDirection();
 
-            // Assert
+            // assert
             Assert.StartsWith("S", result);
             Assert.Matches("^S.*", result);
         }
 
+
         [Fact]
         public void TestStringBackward_Direction_Backward()
         {
-            // Arrange
+            // arrange
             BMW bmw = new BMW { drivingMode = DrivingMode.Backward };
 
-            // Act
+            // act
             string result = bmw.GetDirection();
 
-            // Assert
+            // assert
             Assert.Equal(DrivingMode.Backward.ToString(), result);
             Assert.EndsWith("rd", result);
             Assert.Contains("wa", result);
             Assert.DoesNotContain("mm", result);
         }
 
+
         [Fact]
         public void GetMyCar_callFunction_SameCar()
         {
-            // Arrange
+            // arrange
             BMW bmw = new BMW();
             BMW t2 = new BMW();
 
-            // Act
+            // act
             Car car = bmw.GetMyCar();
 
-            // Assert
+            // assert
             Assert.Same(bmw, car);
             Assert.NotSame(t2, car);
         }
@@ -92,21 +97,22 @@ namespace CarFactoryLibaray_test
         [Fact]
         public void NewCar_CarTypeBMW_ReturnsBMWInstance()
         {
-            // Act
+            // act
             Car? car = CarFactory.NewCar(CarTypes.BMW);
 
-            // Assert
+            // assert
             Assert.IsType<BMW>(car);
             Assert.IsAssignableFrom<Car>(new BMW());
         }
 
+
         [Fact]
         public void NewCar_CarTypeHonda_ThrowsNotImplementedException()
         {
-            // Assert & Act
+            // assert & act
             Assert.Throws<NotImplementedException>(() =>
             {
-                // Act
+                // act
                 Car? result = CarFactory.NewCar(CarTypes.Honda);
             });
         }
